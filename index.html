@@ -72,7 +72,8 @@ var twoSpawns = (total-diff)/2;
 var spawns = twoSpawns+fourSpawns;
 var moves = spawns - 2;
 var fourPercentage = fourSpawns/(twoSpawns+fourSpawns);
-var fourPercentile = 1-Math.exp(-6.9315*Math.pow(fourPercentage, moves));
+//var fourPercentile = 1-Math.exp(-6.9315*Math.pow(fourPercentage, moves));
+var fourPercentile = "WIP"
 d("output").innerHTML = `4 spawns: ${fourSpawns}</br>2 spawns: ${twoSpawns}</br>Total spawns: ${spawns}</br>Moves: ${moves}</br>4 percentage: ${fourPercentage*100}%</br>4 spawn rate percentile: ${fourPercentile*100}%`;
 }
 setInterval(calc, 16)
