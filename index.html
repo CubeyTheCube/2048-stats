@@ -1,111 +1,138 @@
 <!DOCTYPE html>
 <html>
-   <head>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width">
-      <title>2048 Stats</title>
-      <style>
-         input {
-         width: 50px;
-         height: 50px;
-         }
-         .scoreInput {
-         width: 100px;
-         height: 10px;
-         }
-      </style>
-   </head>
-   <body>
-      <h2>Enter your board state</h2>
-      <input id = "0"></input>
-      <input id = "1"></input>
-      <input id = "2"></input>
-      <input id = "3"></input>
-      </br>
-      </br>
-      <input id = "4"></input>
-      <input id = "5"></input>
-      <input id = "6"></input>
-      <input id = "7"></input>
-      </br>
-      </br>
-      <input id = "8"></input>
-      <input id = "9"></input>
-      <input id = "10"></input>
-      <input id = "11"></input>
-      </br>
-      </br>
-      <input id = "12"></input>
-      <input id = "13"></input>
-      <input id = "14"></input>
-      <input id = "15"></input>
-      </br>
-      </br>
-      </div>
-      <h2>Enter one of the following</h2>
-      Score     Moves    Four Spawn Rate
-      <br>
-      <input id = "score" class = "scoreInput"> </input>
-      <input id = "moves" class = "scoreInput"> </input>
-      <input id = "fours" class = "scoreInput"> </input>%
-      <br>
-      <h2>(Optional)</h2>
-      Hours     Minutes   Seconds
-      <br>
-      <input id = "hours" class = "scoreInput"> </input>
-      <input id = "minutes" class = "scoreInput"> </input>
-      <input id = "seconds" class = "scoreInput"> </input>
-      <br>
-      <button onclick="calc()">Go!</button>
-      <p id = "output"></p>
-      <script>
-         const $ = x => document.getElementById(x);
-         
-         function n(input) {
-         	return $(input.toString()).value;
-         }
-         const m = x => n(x) ? parseFloat(n(x)) : 0;
-         
-         function calc() {
-         
-         	var board = []
-         	for (var i = 0; i < 16; i++) {
-         		board.push(n(i))
-         	}
-         
-         	function maxScore(t) {
-         		return t ? t * (Math.log2(t) - 2) + t : 0;
-         	}
-         	var max = 0;
-         	var total = 0;
-          var total4 = 0;
-         	for (i = 0; i < 16; i++) {
-         		max += maxScore(board[i] ? parseInt(board[i]) : 0)
-         		total += board[i] ? parseInt(board[i]) : 0;
-            total4 += board[i] ? Math.floor(parseInt(board[i])/4) : 0;
-         	}
-         	var score;
-         	if ('' != n("score")) {
-         		score = n("score");
-         	} else if ('' != n("moves")) {
-         		score = -2 * total + max + 4 * (m("moves") + 2);
-         	} else {
-         		score = (-2 * total * m("fours") / 100 + max * m("fours") / 100 + max) / (m("fours") / 100 + 1);
-         	}
-         	var diff = max - score;
-         	var fourSpawns = diff / 4;
-         	var twoSpawns = (total - diff) / 2;
-         	var spawns = twoSpawns + fourSpawns;
-         	var moves = spawns - 2;
-         	var fourPercentage = fourSpawns / spawns;
-          var fourMerges = total4 - fourSpawns;
-         	var seconds = m("hours") * 3600 + m("minutes") * 60 + m("seconds");
-         	$('score').value = score;
-         	$('moves').value = moves;
-         	$('fours').value = fourPercentage * 100;
-         	$("output").innerHTML = `4 spawns: ${fourSpawns}</br>2 spawns: ${twoSpawns}</br>Total spawns: ${spawns}</br>4 merges: ${fourMerges}<br>Score from merging 4s: ${fourMerges * 4}<br>Score without merging 4s: ${score - fourMerges * 4}<br>Moves per second: ${moves/seconds}</br>Moves per minute: ${moves/seconds*60}`;
-         }
-               
-      </script>
-   </body>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>2048 Stats</title>
+    <style>
+      input {
+      width: 50px;
+      height: 50px;
+      }
+      .scoreInput {
+      width: 100px;
+      height: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Enter your board state</h2>
+    <input id = "0"></input>
+    <input id = "1"></input>
+    <input id = "2"></input>
+    <input id = "3"></input>
+    </br>
+    </br>
+    <input id = "4"></input>
+    <input id = "5"></input>
+    <input id = "6"></input>
+    <input id = "7"></input>
+    </br>
+    </br>
+    <input id = "8"></input>
+    <input id = "9"></input>
+    <input id = "10"></input>
+    <input id = "11"></input>
+    </br>
+    </br>
+    <input id = "12"></input>
+    <input id = "13"></input>
+    <input id = "14"></input>
+    <input id = "15"></input>
+    </br>
+    </br>
+    </div>
+    <h2>Enter one of the following</h2>
+    Score     Moves    Four Spawn Rate
+    <br>
+    <input id = "score" class = "scoreInput"> </input>
+    <input id = "moves" class = "scoreInput"> </input>
+    <input id = "fours" class = "scoreInput"> </input>%
+    <br>
+    <h2>(Optional)</h2>
+    Hours     Minutes   Seconds
+    <br>
+    <input id = "hours" class = "scoreInput"> </input>
+    <input id = "minutes" class = "scoreInput"> </input>
+    <input id = "seconds" class = "scoreInput"> </input>
+    <br>
+    <button onclick="calc()">Go!</button>
+    <p id = "output"></p>
+    <script>
+      function erf(z) {
+        const t = 1.0 / (1.0 + 0.5 * Math.abs(z));
+        const ans = 1 - t * Math.exp(-z * z - 1.26551223
+                                + t * (1.00002368
+                                + t * (0.37409196
+                                + t * (0.09678418
+                                + t * (-0.18628806
+                                + t * (0.27886807
+                                + t * (-1.13520398
+                                + t * (1.48851587
+                                + t * (-0.82215223
+                                + t * (0.17087277))))))))));
+        if (z >= 0) { return ans; }
+        return -ans;
+      }
+      
+      function binomial(n, s, p = 0.1) {
+        if (s / p > n) return binomial(n, (n + (n - s / p)) / 10);
+        const u = n * p;
+        const o = (u * (1 - p)) ** 0.5;
+      
+        return 0.5 * (1 + erf((s - u) / (o * 2 ** 0.5)));
+      }
+      
+      function percentile(spawns, rate) {
+        if (rate === 0.1) return 50;
+        const chance = binomial(spawns, rate * spawns);
+        return 100 * (rate > 0.1 ? 1 - chance : chance);
+      }
+      const $ = (x) => document.getElementById(x);
+      
+      function n(input) {
+       	return $(input.toString()).value;
+      }
+      const m = (x) => (n(x) ? parseFloat(n(x)) : 0);
+      
+      function calc() {
+       	const board = [];
+       	for (var i = 0; i < 16; i++) {
+       		board.push(n(i));
+       	}
+      
+       	function maxScore(t) {
+       		return t ? t * (Math.log2(t) - 2) + t : 0;
+       	}
+       	let max = 0;
+       	let total = 0;
+        let total4 = 0;
+       	for (i = 0; i < 16; i++) {
+       		max += maxScore(board[i] ? parseInt(board[i]) : 0);
+       		total += board[i] ? parseInt(board[i]) : 0;
+          total4 += board[i] ? Math.floor(parseInt(board[i]) / 4) : 0;
+       	}
+       	let score;
+       	if (n('score') != '') {
+       		score = n('score');
+       	} else if (n('moves') != '') {
+       		score = -2 * total + max + 4 * (m('moves') + 2);
+       	} else {
+       		score = (-2 * total * m('fours') / 100 + max * m('fours') / 100 + max) / (m('fours') / 100 + 1);
+       	}
+       	const diff = max - score;
+       	const fourSpawns = diff / 4;
+       	const twoSpawns = (total - diff) / 2;
+       	const spawns = twoSpawns + fourSpawns;
+       	const moves = spawns - 2;
+       	const fourPercentage = fourSpawns / spawns;
+        const fourMerges = total4 - fourSpawns;
+       	const seconds = m('hours') * 3600 + m('minutes') * 60 + m('seconds');
+       	$('score').value = score;
+       	$('moves').value = moves;
+       	$('fours').value = fourPercentage * 100;
+       	$('output').innerHTML = `4 spawns: ${fourSpawns}</br>2 spawns: ${twoSpawns}</br>Total spawns: ${spawns}</br>4 merges: ${fourMerges}<br>Score from merging 4s: ${fourMerges * 4}<br>Score without merging 4s: ${score - fourMerges * 4}<br>Moves per second: ${moves / seconds}</br>Moves per minute: ${moves / seconds * 60}</br>4 spawn rate percentile: ${percentile(spawns, fourPercentage)}`;
+      }            
+    </script>
+  </body>
 </html>
