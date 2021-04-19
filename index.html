@@ -75,7 +75,7 @@
         return -ans;
       }
       
-      function binomial(n, s, p = 0.1) {
+      function binomial(n, s, p = 0.9) {
         if (s / p > n) return binomial(n, (n + (n - s / p)) / 10);
         const u = n * p;
         const o = (u * (1 - p)) ** 0.5;
@@ -84,9 +84,9 @@
       }
       
       function percentile(spawns, rate) {
-        if (rate === 0.1) return 50;
+        if (rate === 0.9) return 50;
         const chance = binomial(spawns, rate * spawns);
-        return 100 * (rate > 0.1 ? 1 - chance : chance);
+        return 100 * (rate > 0.9 ? 1 - chance : chance);
       }
       const $ = (x) => document.getElementById(x);
       
@@ -131,7 +131,7 @@
        	$('score').value = score;
        	$('moves').value = moves;
        	$('fours').value = fourPercentage * 100;
-       	$('output').innerHTML = `4 spawns: ${fourSpawns}</br>2 spawns: ${twoSpawns}</br>Total spawns: ${spawns}</br>4 merges: ${fourMerges}<br>Score from merging 4s: ${fourMerges * 4}<br>Score without merging 4s: ${score - fourMerges * 4}<br>Moves per second: ${moves / seconds}</br>Moves per minute: ${moves / seconds * 60}</br>4 spawn rate percentile: ${percentile(spawns, fourPercentage)}`;
+       	$('output').innerHTML = `4 spawns: ${fourSpawns}</br>2 spawns: ${twoSpawns}</br>Total spawns: ${spawns}</br>4 merges: ${fourMerges}<br>Score from merging 4s: ${fourMerges * 4}<br>Score without merging 4s: ${score - fourMerges * 4}<br>Moves per second: ${moves / seconds}</br>Moves per minute: ${moves / seconds * 60}</br>2 spawn rate percentile: ${percentile(spawns, twoSpawns / spawns)}`;
       }            
     </script>
   </body>
