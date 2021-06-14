@@ -5,49 +5,93 @@
     <meta name="viewport" content="width=device-width">
     <title>2048 Stats</title>
     <style>
-      input {
-      width: 50px;
-      height: 50px;
+      html, body {
+        background: #faf8ef;
+        color: #776e65;
+      }
+
+      * {
+        font-family: "Clear Sans";
+      }
+
+      input.tile {
+        width: 50px;
+        height: 50px;
+        font-weight: 700;
+        text-align: center;
+        border: none;
+        color: #f9f6f2;
+        background: #d0c4b4;
+        border-radius: 2px;
+        position: fixed;
       }
       .scoreInput {
-      width: 100px;
-      height: 10px;
+        width: 100px;
+        height: 10px;
+      }
+      .container {
+        line-height: 57px;
+        background: #c0aca4;
+        width: 230px;
+        height: 230px;
+        padding-left: 8px;
+        padding-right: 12px;
+        padding-top: 6px;
+        padding-bottom: 4px;
+        border-radius: 4px;
+        z-index: -1;
+      }
+
+      button {
+        background: #8f7a66;
+        width: 89px;
+        height: 40px;
+        border-radius: 3px;
+        margin-top: 4px;
+        color: #f9f6f2;
+        font-size: 18px;
+      }
+
+      @font-face {
+        font-family: "Clear Sans";
+        src: url("ClearSans-Bold.woff") format("woff");
+        font-weight: 700;
+        font-style: normal;
       }
     </style>
   </head>
   <body>
     <h2>Enter your board state</h2>
-    <input id = "0"></input>
-    <input id = "1"></input>
-    <input id = "2"></input>
-    <input id = "3"></input>
+    <div class="container">
+    <input id = "0" class="tile"></input>
+    <input id = "1" class="tile"></input>
+    <input id = "2" class="tile"></input>
+    <input id = "3" class="tile"></input>
     </br>
+    <input id = "4" class="tile"></input>
+    <input id = "5" class="tile"></input>
+    <input id = "6" class="tile"></input>
+    <input id = "7" class="tile"></input>
     </br>
-    <input id = "4"></input>
-    <input id = "5"></input>
-    <input id = "6"></input>
-    <input id = "7"></input>
+    <input id = "8" class="tile"></input>
+    <input id = "9" class="tile"></input>
+    <input id = "10" class="tile"></input>
+    <input id = "11" class="tile"></input>
     </br>
-    </br>
-    <input id = "8"></input>
-    <input id = "9"></input>
-    <input id = "10"></input>
-    <input id = "11"></input>
-    </br>
-    </br>
-    <input id = "12"></input>
-    <input id = "13"></input>
-    <input id = "14"></input>
-    <input id = "15"></input>
+    <input id = "12" class="tile"></input>
+    <input id = "13" class="tile"></input>
+    <input id = "14" class="tile"></input>
+    <input id = "15" class="tile"></input>
+    </div>
     </br>
     </br>
     </div>
     <h2>Enter one of the following</h2>
     Score     Moves    Four Spawn Rate
     <br>
-    <input id = "score" class = "scoreInput"> </input>
-    <input id = "moves" class = "scoreInput"> </input>
-    <input id = "fours" class = "scoreInput"> </input>%
+    <input id = "score" class = "scoreInput score"> </input>
+    <input id = "moves" class = "scoreInput score"> </input>
+    <input id = "fours" class = "scoreInput score"> </input>%
     <br>
     <h2>(Optional)</h2>
     Hours     Minutes   Seconds
@@ -59,6 +103,57 @@
     <button onclick="calc()">Go!</button>
     <p id = "output"></p>
     <script>
+      const COLORS = ['eee4da', 'ede0c8', 'f2b179', 'f59563', 'f67c5f', 'f65e3b', 'edcf72', 'edcc61', 'edc850', 'edc53f', 'edc22e', '9e29cf', '611980', '3a0f4c', '3c3a32'];
+
+      function getFontSize(tile) {
+        return (
+          tile < 128   ? 55
+        : tile < 1024  ? 45
+        : tile < 16384 ? 35
+        : tile < 32768 ? 30
+        :                25
+        );
+      }
+
+      window.addEventListener('load', () => {
+        document.querySelectorAll('input').forEach((input) => {
+          input.dataset.y = input.style.top;
+          input.style.top = `${parseInt(input.dataset.y, 10) - window.scrollY}px`;
+        });
+      });
+
+      window.addEventListener('scroll', () => {
+        document.querySelectorAll('input').forEach((input) => {
+          input.style.top = `${parseInt(input.dataset.y, 10) - window.scrollY}px`;
+        });
+      });
+
+      document.querySelectorAll('input.tile').forEach((input) => {
+        input.style.top = `${81 + Math.floor(input.id / 4) * 58}px`;
+        input.style.left = `${16 + (input.id % 4) * 60}px`;
+        input.addEventListener('input', (e) => {
+          const value = parseInt(e.target.value, 10);
+
+          e.target.style.fontSize = `${getFontSize(value) / 2.14}px`;
+          e.target.style.background = `#${COLORS[Math.min(COLORS.length - 1, Math.floor(Math.log2(value)) - 1)]}`;
+
+          if (value < 8) {
+            e.target.style.color = '#776e65';
+          } else {
+            e.target.style.color = '#f9f6f2'
+          }
+
+          if(value != value) e.target.style.background = '#d0c4b4';
+        });
+      });
+      
+      let lastChanged;
+      document.querySelectorAll('.scoreInput.score').forEach((input) => {
+        input.addEventListener('input', (e) => {
+          lastChanged = e.target.id;
+        });
+      });
+      
       function erf(z) {
         const t = 1.0 / (1.0 + 0.5 * Math.abs(z));
         const ans = 1 - t * Math.exp(-z * z - 1.26551223
@@ -89,6 +184,7 @@
         return 100 * (rate > 0.9 ? 1 - chance : chance);
       }
       const $ = (x) => document.getElementById(x);
+
       
       function n(input) {
        	return $(input.toString()).value;
@@ -113,9 +209,9 @@
           total4 += board[i] ? Math.floor(parseInt(board[i]) / 4) : 0;
        	}
        	let score;
-       	if (n('score') != '') {
+       	if (lastChanged === 'score') {
        		score = n('score');
-       	} else if (n('moves') != '') {
+       	} else if (lastChanged === 'moves') {
        		score = -2 * total + max + 4 * (m('moves') + 2);
        	} else {
        		score = (-2 * total * m('fours') / 100 + max * m('fours') / 100 + max) / (m('fours') / 100 + 1);
