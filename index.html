@@ -210,10 +210,10 @@
         
         const number = value
           ? value.endsWith('k')
-            ? parseInt(input)
-              ? 2 ** (Math.ceil(Math.log2(parseInt(value) * 1000)))
-              : parseInt(value) * 1000
-            : parseInt(value)
+            ? !Number.isNaN(parseInt(input, 10))
+              ? 2 ** (Math.ceil(Math.log2(parseInt(value, 10) * 1000)))
+              : parseInt(value, 10) * 1000
+            : parseInt(value, 10)
           : 0;
         
         return number;
@@ -233,9 +233,9 @@
        	let total = 0;
         let total4 = 0;
        	for (i = 0; i < 16; i++) {
-       		max += maxScore(board[i] ? parseInt(board[i]) : 0);
-       		total += board[i] ? parseInt(board[i]) : 0;
-          total4 += board[i] ? Math.floor(parseInt(board[i]) / 4) : 0;
+       		max += maxScore(board[i]);
+       		total += board[i];
+          total4 += board[i] ? Math.floor(board[i] / 4) : 0;
        	}
        	let score;
        	if (lastChanged === 'score') {
