@@ -210,10 +210,10 @@
         
         const number = value
           ? value.endsWith('k')
-            ? !Number.isNaN(parseInt(input, 10))
-              ? 2 ** (Math.ceil(Math.log2(parseInt(value, 10) * 1000)))
-              : parseInt(value, 10) * 1000
-            : parseInt(value, 10)
+            ? !Number.isNaN(parseFloat(input, 10))
+              ? 2 ** (Math.ceil(Math.log2(parseFloat(value, 10) * 1000)))
+              : parseFloat(value, 10) * 1000
+            : parseFloat(value, 10)
           : 0;
         
         return number;
