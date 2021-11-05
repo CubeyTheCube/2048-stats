@@ -258,7 +258,7 @@
        	document.getElementById('moves').value = moves;
        	document.getElementById('fours').value = fourPercentage * 100;
 
-        const hash = board.map((item) => item.toString(18)).join('');
+        const hash = board.map((item) => Math.round(Math.log2(item)).toString(18)).join('');
         const link = document.createElement('a');
         link.href = `https://2048league.ml/p/${hash}`;
         link.textContent = 'Practice link';
