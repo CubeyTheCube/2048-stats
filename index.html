@@ -68,23 +68,23 @@
     <h2>Enter your board state</h2>
     <div class="container">
     <input id = "0" class="tile"></input>
-    <input id = "1" class="tile"></input>
-    <input id = "2" class="tile"></input>
-    <input id = "3" class="tile"></input>
-    </br>
     <input id = "4" class="tile"></input>
-    <input id = "5" class="tile"></input>
-    <input id = "6" class="tile"></input>
-    <input id = "7" class="tile"></input>
-    </br>
     <input id = "8" class="tile"></input>
-    <input id = "9" class="tile"></input>
-    <input id = "10" class="tile"></input>
-    <input id = "11" class="tile"></input>
-    </br>
     <input id = "12" class="tile"></input>
+    </br>
+    <input id = "1" class="tile"></input>
+    <input id = "5" class="tile"></input>
+    <input id = "9" class="tile"></input>
     <input id = "13" class="tile"></input>
+    </br>
+    <input id = "2" class="tile"></input>
+    <input id = "6" class="tile"></input>
+    <input id = "10" class="tile"></input>
     <input id = "14" class="tile"></input>
+    </br>
+    <input id = "3" class="tile"></input>
+    <input id = "7" class="tile"></input>
+    <input id = "11" class="tile"></input>
     <input id = "15" class="tile"></input>
     </div>
     </br>
@@ -105,6 +105,7 @@
     <input id = "seconds" class = "scoreInput"> </input>
     <br>
     <button onclick="calc()">Go!</button>
+    <div id = "practice"></div>
     <p id = "output"></p>
     <script>
       const COLORS = ['eee4da', 'ede0c8', 'f2b179', 'f59563', 'f67c5f', 'f65e3b', 'edcf72', 'edcc61', 'edc850', 'edc53f', 'edc22e', '9e29cf', '611980', '3a0f4c', '3c3a32'];
@@ -256,6 +257,15 @@
        	document.getElementById('score').value = score;
        	document.getElementById('moves').value = moves;
        	document.getElementById('fours').value = fourPercentage * 100;
+
+        const hash = board.map((item) => item.toString(18)).join('');
+        const link = document.createElement('a');
+        link.href = `https://2048league.ml/p/${hash}`;
+        document.getElementById('practice').append(
+          document.createTextNode('Practice link: '),
+          link
+        );
+
        	document.getElementById('output').textContent = `
           4 spawns: ${fourSpawns}
           2 spawns: ${twoSpawns}
