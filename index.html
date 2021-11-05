@@ -68,23 +68,23 @@
     <h2>Enter your board state</h2>
     <div class="container">
     <input id = "0" class="tile"></input>
-    <input id = "4" class="tile"></input>
-    <input id = "8" class="tile"></input>
-    <input id = "12" class="tile"></input>
-    </br>
     <input id = "1" class="tile"></input>
-    <input id = "5" class="tile"></input>
-    <input id = "9" class="tile"></input>
-    <input id = "13" class="tile"></input>
-    </br>
     <input id = "2" class="tile"></input>
-    <input id = "6" class="tile"></input>
-    <input id = "10" class="tile"></input>
-    <input id = "14" class="tile"></input>
-    </br>
     <input id = "3" class="tile"></input>
+    </br>
+    <input id = "4" class="tile"></input>
+    <input id = "5" class="tile"></input>
+    <input id = "6" class="tile"></input>
     <input id = "7" class="tile"></input>
+    </br>
+    <input id = "8" class="tile"></input>
+    <input id = "9" class="tile"></input>
+    <input id = "10" class="tile"></input>
     <input id = "11" class="tile"></input>
+    </br>
+    <input id = "12" class="tile"></input>
+    <input id = "13" class="tile"></input>
+    <input id = "14" class="tile"></input>
     <input id = "15" class="tile"></input>
     </div>
     </br>
@@ -262,6 +262,7 @@
         const link = document.createElement('a');
         link.href = `https://2048league.ml/p/${hash}`;
         link.textContent = 'Practice link';
+        link.target = '_blank';
         document.getElementById('practice').appendChild(link);
 
        	document.getElementById('output').textContent = `
