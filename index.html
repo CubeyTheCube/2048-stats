@@ -105,7 +105,7 @@
     <input id = "seconds" class = "scoreInput"> </input>
     <br>
     <button onclick="calc()">Go!</button>
-    <div id = "practice"></div>
+    <p id = "practice"></p>
     <p id = "output"></p>
     <script>
       const COLORS = ['eee4da', 'ede0c8', 'f2b179', 'f59563', 'f67c5f', 'f65e3b', 'edcf72', 'edcc61', 'edc850', 'edc53f', 'edc22e', '9e29cf', '611980', '3a0f4c', '3c3a32'];
@@ -261,10 +261,8 @@
         const hash = board.map((item) => item.toString(18)).join('');
         const link = document.createElement('a');
         link.href = `https://2048league.ml/p/${hash}`;
-        document.getElementById('practice').append(
-          document.createTextNode('Practice link: '),
-          link
-        );
+        link.textContent = 'Practice link';
+        document.getElementById('practice').appendChild(link);
 
        	document.getElementById('output').textContent = `
           4 spawns: ${fourSpawns}
