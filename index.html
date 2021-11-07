@@ -150,7 +150,8 @@
             e.target.style.color = '#f9f6f2'
           }
 
-          if(value != value) e.target.style.background = '#d0c4b4';
+          if (Number.isNaN(value))
+            e.target.style.background = '#d0c4b4';
         });
       });
       
