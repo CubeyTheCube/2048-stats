@@ -121,19 +121,19 @@
       }
 
       window.addEventListener('load', () => {
-        document.querySelectorAll('input').forEach((input) => {
+        for (const input of document.querySelectorAll('input')) {
           input.dataset.y = input.style.top;
           input.style.top = `${parseInt(input.dataset.y, 10) - window.scrollY}px`;
-        });
+        }
       });
 
       window.addEventListener('scroll', () => {
-        document.querySelectorAll('input').forEach((input) => {
+        for (const input of document.querySelectorAll('input')) {
           input.style.top = `${parseInt(input.dataset.y, 10) - window.scrollY}px`;
-        });
+        }
       });
 
-      document.querySelectorAll('input.tile').forEach((input) => {
+      for (const input of document.querySelectorAll('input.tile')) {
         input.style.top = `${81 + Math.floor(input.id / 4) * 58}px`;
         input.style.left = `${16 + (input.id % 4) * 60}px`;
         input.addEventListener('input', (e) => {
@@ -153,14 +153,28 @@
           if (Number.isNaN(value))
             e.target.style.background = '#d0c4b4';
         });
-      });
+
+        input.addEventListener('keypress', (e) => {
+          if (e.key.startsWith('Arrow')) {
+            const id = Number(input.id);
+            const newInput = ({
+              Right: Math.floor(id / 4) * 4 + (id + 1) % 4,
+              Left: Math.floor(id / 4) * 4 + (id - 1) % 4,
+              Up: id >= 4 ? id - 4 : id + 12
+              Down: (id + 4) % 16,
+            })[e.key.replace('Arrow', '')];
+          
+            document.getElementById(newInput.toString()).focus();
+          }
+        });
+      }
       
       let lastChanged;
-      document.querySelectorAll('.scoreInput.score').forEach((input) => {
+      for (const input of document.querySelectorAll('.scoreInput.score')) {
         input.addEventListener('input', (e) => {
           lastChanged = e.target.id;
         });
-      });
+      }
       
       function erf(z) {
         const t = 1.0 / (1.0 + 0.5 * Math.abs(z));
@@ -239,14 +253,13 @@
        		total += board[i];
           total4 += board[i] ? Math.floor(board[i] / 4) : 0;
        	}
-       	let score;
-       	if (lastChanged === 'score') {
-       		score = getNumber('score');
-       	} else if (lastChanged === 'moves') {
-       		score = -2 * total + max + 4 * (getNumber('moves') + 2);
-       	} else {
-       		score = (-2 * total * getNumber('fours') / 100 + max * getNumber('fours') / 100 + max) / (getNumber('fours') / 100 + 1);
-       	}
+
+       	const score = lastChanged === 'score'
+          ? getNumber('score')
+          : lastChanged  === 'moves
+            ? -2 * total + max + 4 * (getNumber('moves') + 2)
+            : (-2 * total * getNumber('fours') / 100 + max * getNumber('fours') / 100 + max) / (getNumber('fours') / 100 + 1);
+
        	const diff = max - score;
        	const fourSpawns = diff / 4;
        	const twoSpawns = (total - diff) / 2;
