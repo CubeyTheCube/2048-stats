@@ -154,12 +154,26 @@
             e.target.style.background = '#d0c4b4';
         });
 
-        input.addEventListener('keypress', (e) => {
+        input.addEventListener('keydown', (e) => {
           if (e.key.startsWith('Arrow')) {
+            if (e.key === 'ArrowLeft') {
+              if (e.target.selectionStart > 0) {
+                return;
+              }
+            }
+
+            if (e.key === 'ArrowRight') {
+              if (e.target.selectionStart < e.target.value.length) {
+                return;
+              }
+            }
+
+            e.preventDefault();
+
             const id = Number(input.id);
             const newInput = ({
               Right: Math.floor(id / 4) * 4 + (id + 1) % 4,
-              Left: Math.floor(id / 4) * 4 + (id - 1) % 4,
+              Left: Math.floor(id / 4) * 4 + ((id - 1) % 4 + 4) % 4,
               Up: id >= 4 ? id - 4 : id + 12,
               Down: (id + 4) % 16,
             })[e.key.replace('Arrow', '')];
