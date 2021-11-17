@@ -256,7 +256,7 @@
 
        	const score = lastChanged === 'score'
           ? getNumber('score')
-          : lastChanged  === 'moves
+          : lastChanged  === 'moves'
             ? -2 * total + max + 4 * (getNumber('moves') + 2)
             : (-2 * total * getNumber('fours') / 100 + max * getNumber('fours') / 100 + max) / (getNumber('fours') / 100 + 1);
 
