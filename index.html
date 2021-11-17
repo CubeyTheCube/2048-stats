@@ -160,7 +160,7 @@
             const newInput = ({
               Right: Math.floor(id / 4) * 4 + (id + 1) % 4,
               Left: Math.floor(id / 4) * 4 + (id - 1) % 4,
-              Up: id >= 4 ? id - 4 : id + 12
+              Up: id >= 4 ? id - 4 : id + 12,
               Down: (id + 4) % 16,
             })[e.key.replace('Arrow', '')];
           
