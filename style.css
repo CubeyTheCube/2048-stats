@@ -1,0 +1,59 @@
+html, body, a {
+  background: #faf8ef;
+  color: #776e65;
+}
+
+* {
+  font-family: "Clear Sans";
+}
+
+input.tile {
+  width: 50px;
+  height: 50px;
+  font-weight: 700;
+  text-align: center;
+  border: none;
+  color: #f9f6f2;
+  background: #d0c4b4;
+  border-radius: 2px;
+  position: fixed;
+}
+
+.scoreInput {
+  width: 100px;
+  height: 10px;
+}
+
+.container {
+  line-height: 57px;
+  background: #c0aca4;
+  width: 230px;
+  height: 230px;
+  padding-left: 8px;
+  padding-right: 12px;
+  padding-top: 6px;
+  padding-bottom: 4px;
+  border-radius: 4px;
+  z-index: -1;
+}
+
+button {
+  background: #8f7a66;
+  width: 89px;
+  height: 40px;
+  border-radius: 3px;
+  margin-top: 4px;
+  color: #f9f6f2;
+  font-size: 18px;
+}
+
+#output {
+  white-space: pre-line;
+}
+
+@font-face {
+  font-family: "Clear Sans";
+  src: url("ClearSans-Bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+}
