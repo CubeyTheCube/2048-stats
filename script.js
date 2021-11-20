@@ -203,6 +203,10 @@ function calc() {
   const hash = board
     .map((item) => (item ? Math.round(Math.log2(item)).toString(18) : "0"))
     .join("");
+  
+  if (document.getElementById("practice").querySelector('a'))
+    document.getElementById("practice").removeChild(document.getElementById("practice").querySelector('a'));
+
   const link = document.createElement("a");
   link.href = `https://2048league.ml/p/${hash}`;
   link.textContent = "Practice link";
