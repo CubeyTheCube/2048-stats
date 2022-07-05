@@ -201,6 +201,7 @@ function calc() {
   document.getElementById("fours").value = fourPercentage * 100;
 
   const hash = board
+    .map((_, index) => board[Math.floor(index / 4) + 4 * (index % 4)])
     .map((item) => (item ? Math.round(Math.log2(item)).toString(18) : "0"))
     .join("");
   
